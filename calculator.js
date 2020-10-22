@@ -9,7 +9,7 @@ for(let i = 0; i < 60; i++) {
 
 const tutorial_canvas = document.getElementById("tutorial");
 const tutorial_canvas_context = tutorial_canvas.getContext('2d');
-tutorial_canvas.style.background = "#DDDDDD"
+tutorial_canvas.style.background = "#FFFFFF00"
 
 let flex = tutorial_canvas.getBoundingClientRect();
 
@@ -41,8 +41,11 @@ document.addEventListener('keydown', (event) => {
 
     if(keysPressed[' ']){
        let thisnum = new BaseSixtyNumber(workingnum.join(''))
+    }else if(event.key == 'x' ){
+        tutorial_canvas_context.clearRect(0,0,tutorial_canvas.width, tutorial_canvas.height)
+        workingnum = []
     }else{
-        tutorial_canvas_context.fillText(`${workingnum.join('')}`, 50, 350)
+        tutorial_canvas_context.fillText(`${workingnum.join('')}`, 10, 50)
     }
  });
  
@@ -68,10 +71,16 @@ class BaseSixtyNumber{
 
         tutorial_canvas_context.clearRect(0,0,tutorial_canvas.width, tutorial_canvas.height)
         for(let t=0;t<this.digits.length;t++){
-        tutorial_canvas_context.drawImage(zimgs[this.digits[t]], 0,0, zimgs[this.digits[t]].width, zimgs[this.digits[t]].height, t*Math.min((tutorial_canvas.width/this.digits.length), 50), 10, Math.min((tutorial_canvas.width/this.digits.length), 50),Math.min((tutorial_canvas.width/this.digits.length), 50))
+        tutorial_canvas_context.drawImage(zimgs[this.digits[t]], 0,0, zimgs[this.digits[t]].width, zimgs[this.digits[t]].height, t*Math.min((tutorial_canvas.width/this.digits.length), 50), 80, Math.min((tutorial_canvas.width/this.digits.length), 50),Math.min((tutorial_canvas.width/this.digits.length), 50))
+
+        if(t< this.digits.length-1){ 
+            tutorial_canvas_context.fillText(`${this.digits[t]},`, 10+(t*Math.min((tutorial_canvas.width/this.digits.length), 50)),200)
+        }else{
+            tutorial_canvas_context.fillText(`${this.digits[t]}`, 10+(t*Math.min((tutorial_canvas.width/this.digits.length), 50)),200)
+        }
         }
 
-        tutorial_canvas_context.fillText(`${workingnum.join('')}`, 50, 350)
+        tutorial_canvas_context.fillText(`${workingnum.join('')}`, 10, 50)
     }
     sixtify(num){
         let arr = []
